@@ -1,0 +1,42 @@
+/* Global responsive helpers */
+
+/* Fluid root font-size: scales between 14px and 18px depending on viewport width */
+html {
+	font-size: clamp(14px, 1.2rem + 0.4vw, 18px);
+}
+
+/* Ensure images and media are responsive */
+img,
+picture,
+video,
+canvas,
+svg {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+/* Make primary buttons easier to tap on mobile */
+.btn-mobile-friendly {
+	padding-top: 0.65rem;
+	padding-bottom: 0.65rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	border-radius: 0.5rem;
+}
+
+/* Utility: visually-hidden on small screens */
+@media (max-width: 639px) {
+	.hide-on-mobile {
+		display: none !important;
+	}
+}
+
+/* Increase hit area for small touch targets without changing visual size */
+.touch-target {
+	padding: 0.5rem;
+	margin: -0.5rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}

@@ -48,7 +48,8 @@ const items: Item[] = [
 
 const SocialIcons: React.FC = () => {
   return (
-    <div className="fixed left-6 top-6 z-50 flex flex-col gap-3">
+    // hide on small screens (mobile) to avoid taking precious screen space
+    <div className="fixed left-4 top-4 z-50 flex flex-col gap-3">
       {items.map(({ id, href, label, Icon }) => (
         <div key={id} className="group">
           <a

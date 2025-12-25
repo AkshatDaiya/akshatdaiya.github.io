@@ -52,7 +52,8 @@ const HeroAndAbout = () => {
             transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
             className="mt-3 sm:mt-4 text-base sm:text-xl md:text-2xl lg:text-3xl font-medium leading-snug text-muted-foreground"
           >
-            a frontend developer focused on building fast, scalable, and meaningful web experiences.
+            a frontend developer focused on building fast, scalable, and
+            meaningful web experiences.
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 14 }}
@@ -61,9 +62,11 @@ const HeroAndAbout = () => {
             transition={{ duration: 0.5, delay: 0.18, ease: "easeOut" }}
             className="mt-4 sm:mt-6 max-w-xl mx-auto lg:mx-0 text-sm sm:text-base lg:text-lg leading-relaxed text-muted-foreground/80"
           >
-            From community-driven platforms to performance-optimised interfaces, I craft products that are intuitive,
-            accessible, and built to scale. When I'm not coding, I'm refining UI details or exploring better ways to
-            improve user experience. Let's build something impactful together.
+            From community-driven platforms to performance-optimised interfaces,
+            I craft products that are intuitive, accessible, and built to scale.
+            When I'm not coding, I'm refining UI details or exploring better
+            ways to improve user experience. Let's build something impactful
+            together.
           </motion.p>
         </motion.div>
 
@@ -74,7 +77,7 @@ const HeroAndAbout = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.55, ease: "easeOut" }}
-          className="relative w-48 h-60 sm:w-64 sm:h-80 md:w-72 md:h-[360px] lg:w-[350px] lg:h-[450px] shrink-0 overflow-hidden rounded-2xl border border-slate-200/70 shadow-[0_22px_60px_-38px_rgba(15,23,42,0.55)] dark:border-slate-800/70 dark:shadow-[0_24px_80px_-48px_rgba(0,0,0,0.8)]"
+          className="relative w-48 h-60 sm:w-64 sm:h-80 md:w-72 md:h-90 lg:w-87.5 lg:h-112.5 shrink-0 overflow-hidden rounded-2xl border border-slate-200/70 shadow-[0_22px_60px_-38px_rgba(15,23,42,0.55)] dark:border-slate-800/70 dark:shadow-[0_24px_80px_-48px_rgba(0,0,0,0.8)]"
         >
           <motion.div
             className="absolute inset-0 bg-linear-to-br from-white/10 via-sky-100/8 to-transparent dark:from-white/5 dark:via-slate-900/20 dark:to-transparent"

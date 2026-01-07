@@ -1,33 +1,40 @@
 const experiences = [
   {
     role: "Frontend Developer",
-    company: "Company Name",
-    type: "Internship",
+    company: "CrakCode",
+    type: "Full-time",
     period: "Jun 2024 – Present",
-    location: "Remote / India",
-    description:
-      "Building responsive, accessible web interfaces with modern frontend tooling. Collaborating closely with designers to ship pixel-perfect UI.",
-    tech: ["React", "TypeScript", "Tailwind CSS", "Vite"],
-  },
-  {
-    role: "Web Developer",
-    company: "Freelance",
-    type: "Project",
-    period: "2023 – 2024",
     location: "Remote",
     description:
-      "Designed and developed landing pages and dashboards for small businesses, focusing on performance, SEO, and clean UX.",
-    tech: ["JavaScript", "React", "Figma"],
+      "Architected and optimized a scalable community-driven platform enabling developers and job seekers to create new communities in under 60 seconds. Led development of the Long-Term Mentorship feature with free trials and one-on-one mentoring, while driving performance optimization, accessibility compliance, and Firebase integrations to achieve high reliability and WhatsApp-level performance standards.",
+    tech: [
+      "React",
+      "TypeScript",
+      "Firebase",
+      "Tailwind CSS",
+      "Redux Toolkit",
+      "Framer Motion",
+    ],
   },
   {
-    role: "Student Developer",
-    company: "Personal Projects",
+    role: "Full Stack (MERN) Developer Intern",
+    company: "Global IT Providers",
+    type: "Internship",
+    period: "Mar 2023 – Jul 2023",
+    location: "Jaipur, India",
+    description:
+      "Developed full-stack MERN applications including shopping carts, user management systems, and parking systems. Implemented end-to-end solutions covering frontend UI, backend APIs, and database design while collaborating with cross-functional teams and contributing to testing and code quality initiatives.",
+    tech: ["React", "Node.js", "Express.js", "MongoDB", "JavaScript"],
+  },
+  {
+    role: "Frontend Developer",
+    company: "Personal & Community Projects",
     type: "Self-initiated",
     period: "Ongoing",
     location: "India",
     description:
-      "Experimenting with new frontend patterns, animations, and component systems. Turning ideas into polished portfolio-ready projects.",
-    tech: ["Next.js", "Framer Motion", "Git"],
+      "Building performance-focused, mobile-first web applications and experimenting with modern UI/UX patterns, animations, and scalable component architectures. Continuously refining portfolio projects with a strong emphasis on accessibility, responsiveness, and clean code practices.",
+    tech: ["Next.js", "React", "Firebase", "Tailwind CSS", "Git"],
   },
 ];
 
@@ -55,7 +62,7 @@ export default function Experience() {
           {experiences.map((item) => (
             <article
               key={item.role + item.company}
-              className="relative overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-[0_12px_40px_-24px_rgba(15,23,42,0.35)] transition-transform hover:-translate-y-[2px] dark:border-slate-800/80 dark:bg-slate-900/80 dark:shadow-[0_16px_46px_-26px_rgba(15,23,42,0.7)]"
+              className="relative overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-[0_12px_40px_-24px_rgba(15,23,42,0.35)] transition-transform hover:-translate-y-0.5 dark:border-slate-800/80 dark:bg-slate-900/80 dark:shadow-[0_16px_46px_-26px_rgba(15,23,42,0.7)]"
             >
               <div className="relative p-5 sm:p-6 flex flex-col gap-3">
                 <div className="flex flex-wrap items-start justify-between gap-3">

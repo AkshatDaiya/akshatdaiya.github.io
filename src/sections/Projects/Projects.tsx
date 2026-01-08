@@ -2,6 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Community from "../../assets/images/community.png";
 import CommunityGroups from "../../assets/images/community_groups_reactjs.png";
+import Mentorship from "../../assets/images/mentorship_program.png";
+import MentorshipDetails from "../../assets/images/mentorship_details.png";
+import Craktrack from "../../assets/images/craktrack.png";
+import CraktrackCreating from "../../assets/images/task_creating.png";
+import CraktrackCreating1 from "../../assets/images/task_creating1.png";
 
 const projects = [
   {
@@ -19,17 +24,25 @@ const projects = [
     description:
       "Revenue-generating mentorship feature with free trial logic, one-on-one mentoring flows, and Firebase-backed authentication and data handling.",
     tech: ["React", "Firebase", "Framer Motion", "Tailwind CSS"],
-    image:
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
+    image: Mentorship,
+    images: [Mentorship, MentorshipDetails],
   },
   {
-    title: "MERN Systems Suite",
-    role: "Full Stack Developer Intern",
+    title: "CrakTrack – Task Management System",
+    role: "Frontend Developer",
     description:
-      "Collection of MERN stack applications including shopping carts, user management systems, and parking systems with full end-to-end architecture.",
-    tech: ["React", "Node.js", "Express.js", "MongoDB", "JavaScript"],
-    image:
-      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80",
+      "CrakTrack is an internal task management web application built at CrakCode, inspired by Trello-style workflows. It enables teams to manage tasks across multiple states such as To Do, In Progress, Blocked, and Resolved. The system includes advanced filtering and sorting capabilities—search by title or description, filter by task type and priority, and dynamic sorting. It also features automated monthly task migration, where unresolved tasks roll over to the next sprint while resolved tasks remain archived, ensuring clean sprint management and continuity.",
+    tech: [
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "State Management",
+      "Firebase",
+      "Framer Motion",
+      "Component-Based Architecture",
+    ],
+    image: Craktrack,
+    images: [Craktrack, CraktrackCreating, CraktrackCreating1],
   },
 ];
 

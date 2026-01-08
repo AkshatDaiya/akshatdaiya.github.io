@@ -30,7 +30,7 @@ const App: React.FC = () => {
       <div className="relative min-h-screen overflow-hidden bg-white text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
         {/* Global soft glows */}
         <motion.div
-          className="pointer-events-none absolute -left-28 -top-32 h-107.5 w-107.5 rounded-full bg-sky-400/18 blur-[120px] dark:bg-sky-500/14"
+          className="pointer-events-none absolute left-8 top-8 h-80 w-[320px] rounded-full bg-sky-400/18 blur-[120px] dark:bg-sky-500/14"
           animate={{
             scale: [1, 1.06, 1],
             opacity: [0.78, 0.92, 0.78],

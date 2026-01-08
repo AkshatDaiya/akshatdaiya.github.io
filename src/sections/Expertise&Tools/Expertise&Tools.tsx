@@ -44,11 +44,8 @@ export default function ExpertiseAndTools() {
 
             <ul className="mt-6 space-y-4 text-sm sm:text-base text-slate-700 dark:text-slate-200">
               {expertise.map((item) => (
-                <li
-                  key={item}
-                  className="flex gap-3"
-                >
-                  <span className="mt-2 h-2 w-2 rounded-full bg-slate-400 dark:bg-slate-500" />
+                <li key={item} className="grid grid-cols-[18px_1fr] items-center gap-3">
+                  <span className="h-2 w-2 rounded-full bg-slate-400 dark:bg-slate-500 self-center" />
                   <span className="leading-relaxed">{item}</span>
                 </li>
               ))}
@@ -63,11 +60,8 @@ export default function ExpertiseAndTools() {
 
             <ul className="mt-6 space-y-4 text-sm sm:text-base text-slate-700 dark:text-slate-200">
               {tools.map((item) => (
-                <li
-                  key={item}
-                  className="flex gap-3"
-                >
-                  <span className="mt-2 h-2 w-2 rounded-full bg-slate-400 dark:bg-slate-500" />
+                <li key={item} className="grid grid-cols-[18px_1fr] items-center gap-3">
+                  <span className="h-2 w-2 rounded-full bg-slate-400 dark:bg-slate-500 self-center" />
                   <span className="leading-relaxed">{item}</span>
                 </li>
               ))}

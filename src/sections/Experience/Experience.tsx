@@ -5,8 +5,12 @@ const experiences = [
     type: "Full-time",
     period: "Jun 2024 – Present",
     location: "Remote",
-    description:
-      "Architected and optimized a scalable community-driven platform enabling developers and job seekers to create new communities in under 60 seconds. Led development of the Long-Term Mentorship feature with free trials and one-on-one mentoring, while driving performance optimization, accessibility compliance, and Firebase integrations to achieve high reliability and WhatsApp-level performance standards.",
+    highlights: [
+      "Architected and optimized a scalable community-driven platform enabling users to create new communities in under 60 seconds with WhatsApp-level performance standards",
+      "Designed and implemented mobile-first, accessible UI/UX with a strong focus on performance, responsiveness, and cross-device compatibility",
+      "Led development of the Long-Term Mentorship feature, including free trials and one-on-one mentoring flows, driving direct revenue impact",
+      "Continuously improved frontend performance and Firebase integrations to enhance application reliability and user experience",
+    ],
     tech: [
       "React",
       "TypeScript",
@@ -22,8 +26,11 @@ const experiences = [
     type: "Internship",
     period: "Mar 2023 – Jul 2023",
     location: "Jaipur, India",
-    description:
-      "Developed full-stack MERN applications including shopping carts, user management systems, and parking systems. Implemented end-to-end solutions covering frontend UI, backend APIs, and database design while collaborating with cross-functional teams and contributing to testing and code quality initiatives.",
+    highlights: [
+      "Developed full-stack MERN applications including shopping carts, user management systems, and parking systems",
+      "Implemented end-to-end solutions covering frontend interfaces, backend APIs, and database design",
+      "Collaborated with cross-functional teams to design, develop, and test scalable web applications",
+    ],
     tech: ["React", "Node.js", "Express.js", "MongoDB", "JavaScript"],
   },
   {
@@ -32,8 +39,11 @@ const experiences = [
     type: "Self-initiated",
     period: "Ongoing",
     location: "India",
-    description:
-      "Building performance-focused, mobile-first web applications and experimenting with modern UI/UX patterns, animations, and scalable component architectures. Continuously refining portfolio projects with a strong emphasis on accessibility, responsiveness, and clean code practices.",
+    highlights: [
+      "Building performance-focused, mobile-first web applications using modern React and Next.js patterns",
+      "Experimenting with animations, component architectures, and scalable design systems",
+      "Refining portfolio projects with a strong emphasis on accessibility, responsiveness, and clean code practices",
+    ],
     tech: ["Next.js", "React", "Firebase", "Tailwind CSS", "Git"],
   },
 ];
@@ -87,9 +97,16 @@ export default function Experience() {
                   <span>{item.location}</span>
                 </div>
 
-                <p className="text-sm sm:text-base text-slate-600 leading-relaxed dark:text-slate-200">
-                  {item.description}
-                </p>
+                <ul className="mt-2 space-y-2.5">
+                  {item.highlights.map((point) => (
+                    <li
+                      key={point}
+                      className="border-l-2 border-slate-200 dark:border-slate-700 pl-3 text-sm sm:text-base text-slate-600 dark:text-slate-200 leading-relaxed transition-colors hover:border-slate-400 dark:hover:border-slate-500"
+                    >
+                      {point}
+                    </li>
+                  ))}
+                </ul>
 
                 <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {item.tech.map((tech) => (

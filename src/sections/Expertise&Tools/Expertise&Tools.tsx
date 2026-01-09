@@ -10,6 +10,7 @@ const tools = [
   "React.js, JavaScript (ES6+), TypeScript",
   "Redux Toolkit, Context API, React Router",
   "Tailwind CSS, Bootstrap, Framer Motion",
+  "MERN (MongoDB, Express, React, Node.js)",
   "Firebase (Auth, Firestore, Cloud Functions, Storage)",
   "Git, GitHub, Vercel, Netlify, Postman, Chrome DevTools",
 ];

@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import profileImage from "../assets/images/Akshat_Daiya.png";
 
 const HeroAndAbout = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -86,7 +87,7 @@ const HeroAndAbout = () => {
             aria-hidden
           />
           <motion.img
-            src="/src/assets/images/Akshat_Daiya.png"
+            src={profileImage}
             alt="Akshat Daiya"
             className="w-full h-full object-cover"
             whileHover={{ scale: 1.04 }}

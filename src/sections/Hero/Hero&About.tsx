@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import profileImage from "../assets/images/Akshat_Daiya.png";
+import profileImage from "../../assets/images/Akshat_Daiya.png";
 
 const HeroAndAbout = () => {
   const sectionRef = useRef<HTMLElement | null>(null);

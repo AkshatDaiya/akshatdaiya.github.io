@@ -2,9 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
-// https://vite.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig({
   plugins: [react(), tailwindcss()],
-  // Use repo subpath only for production builds (GitHub Pages). During dev use '/'.
-  base: mode === "production" ? "/akshatdaiya.github.io/" : "/",
-}));
+  base: "/", // ✅ correct for username.github.io repo
+});

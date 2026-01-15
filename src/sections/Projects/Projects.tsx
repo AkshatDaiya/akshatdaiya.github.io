@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Community from "../../assets/images/community.png";
-import CommunityGroups from "../../assets/images/community_groups_reactjs.png";
-import Mentorship from "../../assets/images/mentorship_program.png";
-import MentorshipDetails from "../../assets/images/mentorship_details.png";
-import Craktrack from "../../assets/images/craktrack.png";
-import CraktrackCreating from "../../assets/images/task_creating.png";
-import CraktrackCreating1 from "../../assets/images/task_creating1.png";
+import Community from "../../assets/images/community.webp";
+import CommunityGroups from "../../assets/images/community_groups_reactjs.webp";
+import Mentorship from "../../assets/images/mentorship_program.webp";
+import MentorshipDetails from "../../assets/images/mentorship_details.webp";
+import Craktrack from "../../assets/images/craktrack.webp";
+import CraktrackCreating from "../../assets/images/task_creating.webp";
+import CraktrackCreating1 from "../../assets/images/task_creating1.webp";
 
 const projects = [
   {

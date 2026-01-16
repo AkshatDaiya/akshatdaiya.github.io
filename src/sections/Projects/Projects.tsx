@@ -142,6 +142,7 @@ export default function Projects() {
           fullImageOpen={fullImageOpen}
           setFullImageOpen={setFullImageOpen}
           slideIndex={slideIndex}
+          setSlideIndex={setSlideIndex}
         />
       </div>
     </section>

@@ -9,7 +9,6 @@ const HeroAndAbout = () => {
     offset: ["start end", "end start"],
   });
 
-  // Keep hero content aligned by moving both columns together.
   const sharedY = useTransform(scrollYProgress, [0, 1], ["0%", "-6%"]);
   const glowScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
 
@@ -18,7 +17,7 @@ const HeroAndAbout = () => {
       ref={sectionRef}
       className="relative overflow-hidden py-14 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8"
     >
-      {/* Background parallax shapes */}
+      {/* Background glows */}
       <motion.div
         style={{ scale: glowScale, y: sharedY }}
         className="pointer-events-none absolute -left-32 -top-24 h-64 w-64 rounded-full bg-sky-400/25 blur-3xl dark:bg-sky-500/15"
@@ -30,48 +29,8 @@ const HeroAndAbout = () => {
         aria-hidden
       />
 
-      <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row gap-10 sm:gap-12 lg:gap-14 items-center lg:items-center justify-center">
-        {/* Text Content */}
-        <motion.div
-          style={{ y: sharedY }}
-          className="flex-1 space-y-5 text-center lg:text-left"
-          transition={{ type: "spring", stiffness: 120, damping: 18 }}
-        >
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.45, ease: "easeOut" }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
-          >
-            Hi, I'm Akshat.
-          </motion.h1>
-          <motion.h2
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-            className="mt-3 sm:mt-4 text-base sm:text-xl md:text-2xl lg:text-3xl font-medium leading-snug text-muted-foreground"
-          >
-            a frontend developer focused on building fast, scalable, and
-            meaningful web experiences.
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.18, ease: "easeOut" }}
-            className="mt-4 sm:mt-6 max-w-xl mx-auto lg:mx-0 text-sm sm:text-base lg:text-lg leading-relaxed text-muted-foreground/80"
-          >
-            From community-driven platforms to performance-optimised interfaces,
-            I craft products that are intuitive, accessible, and built to scale.
-            When I'm not coding, I'm refining UI details or exploring better
-            ways to improve user experience. Let's build something impactful
-            together.
-          </motion.p>
-        </motion.div>
-
-        {/* Image with parallax hover */}
+      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-10 sm:gap-12 lg:gap-14 items-center justify-center">
+        {/* IMAGE — LEFT ON DESKTOP */}
         <motion.div
           style={{ y: sharedY }}
           initial={{ opacity: 0, scale: 0.96 }}
@@ -93,6 +52,47 @@ const HeroAndAbout = () => {
             whileHover={{ scale: 1.04 }}
             transition={{ type: "spring", stiffness: 180, damping: 12 }}
           />
+        </motion.div>
+
+        {/* TEXT — RIGHT ON DESKTOP */}
+        <motion.div
+          style={{ y: sharedY }}
+          className="flex-1 space-y-5 text-center lg:text-left"
+          transition={{ type: "spring", stiffness: 120, damping: 18 }}
+        >
+          <motion.h1
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.45, ease: "easeOut" }}
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+          >
+            Hi, I&apos;m Akshat.
+          </motion.h1>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+            className="mt-3 sm:mt-4 text-base sm:text-xl md:text-2xl lg:text-3xl font-medium leading-snug text-muted-foreground"
+          >
+            A frontend and MERN stack developer building fast, scalable, and
+            user-focused web applications.
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.18, ease: "easeOut" }}
+            className="mt-4 sm:mt-6 max-w-xl mx-auto lg:mx-0 text-sm sm:text-base lg:text-lg leading-relaxed text-muted-foreground/80"
+          >
+            From community-driven platforms to performance-optimised interfaces,
+            I design and build intuitive, accessible products that scale for
+            real-world use. I care deeply about clean UI, smooth interactions,
+            and writing maintainable code that teams can rely on.
+          </motion.p>
         </motion.div>
       </div>
     </section>

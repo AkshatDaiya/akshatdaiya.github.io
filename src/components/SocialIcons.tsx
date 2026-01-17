@@ -41,7 +41,7 @@ const SocialIcons: React.FC = () => {
 
   const copyEmail = async () => {
     await navigator.clipboard.writeText("daiyaakshat4@gmail.com");
-    showToast("Email copied to clipboard");
+    showToast("Email copied");
   };
 
   const items = [

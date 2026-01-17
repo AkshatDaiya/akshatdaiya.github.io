@@ -97,7 +97,7 @@ const SocialIcons: React.FC = () => {
               type="button"
               onClick={onClick}
               aria-label="Copy email"
-              className="flex items-center"
+              className="flex items-center cursor-pointer"
             >
               <IconButton
                 Icon={Icon}

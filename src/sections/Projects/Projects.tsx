@@ -16,43 +16,40 @@ export interface Project {
   tech: string[];
   image: string;
   images?: string[];
+  link?: string;
 }
 
-/* ---------------- Data (UNCHANGED) ---------------- */
+/* ---------------- Data ---------------- */
 export const projects: Project[] = [
   {
     title: "Developer Community Platform",
     role: "Frontend Developer",
     description:
-      "A scalable community-driven platform allowing developers and job seekers to create and manage communities in under 60 seconds. Focused on performance, accessibility, and mobile-first UX with WhatsApp-level responsiveness.",
+      "A scalable community-driven platform allowing developers and job seekers to create and manage communities in under 60 seconds.",
     tech: ["React", "TypeScript", "Firebase", "Tailwind CSS", "Redux Toolkit"],
     image: Community,
     images: [Community, CommunityGroups],
+    link: "https://www.crakcode.in/community",
   },
   {
     title: "Long-Term Mentorship System",
     role: "Frontend Developer",
     description:
-      "Revenue-generating mentorship feature with free trial logic, one-on-one mentoring flows, and Firebase-backed authentication and data handling.",
+      "Revenue-generating mentorship feature with free trial logic and one-on-one mentoring flows.",
     tech: ["React", "Firebase", "Framer Motion", "Tailwind CSS"],
     image: Mentorship,
     images: [Mentorship, MentorshipDetails],
+    link: "https://www.crakcode.in/mentor-search",
   },
   {
     title: "CrakTrack – Task Management System",
     role: "Frontend Developer",
     description:
-      "CrakTrack is an internal task management web application built at CrakCode, inspired by Trello-style workflows. It enables teams to manage tasks across multiple states such as To Do, In Progress, Blocked, and Resolved...",
-    tech: [
-      "React",
-      "TypeScript",
-      "Tailwind CSS",
-      "State Management",
-      "Firebase",
-      "Framer Motion",
-    ],
+      "Internal Trello-style task management system with task states, filters, sorting, and automated monthly rollover.",
+    tech: ["React", "TypeScript", "Tailwind CSS", "Firebase", "Framer Motion"],
     image: Craktrack,
     images: [Craktrack, CraktrackCreating, CraktrackCreating1],
+    link: "https://www.crakcode.in/craktrack",
   },
 ];
 
@@ -61,9 +58,8 @@ export default function Projects() {
   const [active, setActive] = useState<number | null>(null);
   const [fullImageOpen, setFullImageOpen] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
-  const modalRef = useRef<HTMLDivElement>(null);
+  const modalRef = useRef<HTMLDivElement | null>(null);
 
-  /* ESC handling (UNCHANGED) */
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -81,7 +77,6 @@ export default function Projects() {
     setFullImageOpen(false);
   };
 
-  /* ---------------- UI BELOW IS UNCHANGED ---------------- */
   return (
     <section className="py-16 px-4">
       <div className="max-w-6xl mx-auto">
@@ -90,10 +85,6 @@ export default function Projects() {
             Projects
           </p>
           <h2 className="mt-2 text-3xl font-semibold">Selected work</h2>
-          <p className="mt-3 max-w-2xl text-slate-500">
-            A few projects highlighting how I think about UX, performance, and
-            implementation detail.
-          </p>
         </div>
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -112,7 +103,11 @@ export default function Projects() {
                   alt={p.title}
                   className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
+
+                {/* hover overlay */}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition" />
+
+                {/* bottom content */}
                 <div className="absolute bottom-0 left-0 right-0 p-4 text-white bg-linear-to-t from-black/80 to-transparent">
                   <h3 className="font-semibold">{p.title}</h3>
 

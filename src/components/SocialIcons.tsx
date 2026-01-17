@@ -1,4 +1,6 @@
 import React from "react";
+import { useToast } from "../hooks/useToast";
+import Toast from "../components/Toast";
 
 /* ---------------- Icons ---------------- */
 
@@ -32,23 +34,14 @@ const GmailIcon = () => (
   </svg>
 );
 
-/* ---------------- Config ---------------- */
-
-const EMAIL = "daiyaakshat4@gmail.com";
-
 /* ---------------- Component ---------------- */
 
 const SocialIcons: React.FC = () => {
-  const [copied, setCopied] = React.useState(false);
+  const { visible, message, showToast } = useToast();
 
   const copyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(EMAIL);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      window.prompt("Copy email:", EMAIL);
-    }
+    await navigator.clipboard.writeText("daiyaakshat4@gmail.com");
+    showToast("Email copied to clipboard");
   };
 
   const items = [
@@ -66,48 +59,57 @@ const SocialIcons: React.FC = () => {
     },
     {
       id: "gmail",
-      label: copied ? "Copied!" : "Email",
+      label: "Email",
       Icon: GmailIcon,
       onClick: copyEmail,
     },
   ];
 
   return (
-    <div className="fixed left-4 top-4 z-50 flex flex-col gap-3">
-      {items.map(({ id, href, label, Icon, onClick }) => (
-        <div
-          key={id}
-          className="group relative"
-        >
-          {href ? (
-            <a
-              href={href}
-              target="_blank"
-              rel="noreferrer"
-              aria-label={label}
-              className="flex items-center"
-            >
-              <IconButton
-                Icon={Icon}
-                label={label}
-              />
-            </a>
-          ) : (
-            <button
-              type="button"
-              onClick={onClick}
-              aria-label="Copy email"
-              className="flex items-center cursor-pointer"
-            >
-              <IconButton
-                Icon={Icon}
-                label={label}
-              />
-            </button>
-          )}
-        </div>
-      ))}
-    </div>
+    <>
+      {/* SOCIAL ICONS */}
+      <div className="fixed left-4 top-4 z-50 flex flex-col gap-3">
+        {items.map(({ id, href, label, Icon, onClick }) => (
+          <div
+            key={id}
+            className="group relative"
+          >
+            {href ? (
+              <a
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={label}
+                className="flex items-center"
+              >
+                <IconButton
+                  Icon={Icon}
+                  label={label}
+                />
+              </a>
+            ) : (
+              <button
+                type="button"
+                onClick={onClick}
+                aria-label="Copy email address"
+                className="flex items-center cursor-pointer"
+              >
+                <IconButton
+                  Icon={Icon}
+                  label={label}
+                />
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* TOAST */}
+      <Toast
+        visible={visible}
+        message={message}
+      />
+    </>
   );
 };
 
@@ -120,7 +122,7 @@ const IconButton = ({ Icon, label }: { Icon: React.FC; label: string }) => (
       <Icon />
     </div>
 
-    {/* Desktop hover label only */}
+    {/* Desktop hover label */}
     <span
       className="
         pointer-events-none

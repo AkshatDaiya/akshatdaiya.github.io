@@ -1,5 +1,7 @@
 import React from "react";
 
+/* ---------------- Icons ---------------- */
+
 const LinkedInIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -24,55 +26,117 @@ const GitHubIcon = () => (
   </svg>
 );
 
+const GmailIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className="h-5 w-5"
+    aria-hidden
+  >
+    <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+  </svg>
+);
+
+/* ---------------- Types ---------------- */
+
 type Item = {
   id: string;
-  href: string;
   label: string;
   Icon: React.FC;
+  href?: string;
+  onClick?: () => void;
 };
 
-const items: Item[] = [
-  {
-    id: "linkedin",
-    href: "https://www.linkedin.com/in/akshat-daiya-a0b67b355/",
-    label: "linkedin.com/in/akshat-daiya",
-    Icon: LinkedInIcon,
-  },
-  {
-    id: "github",
-    href: "https://github.com/AkshatDaiya?tab=overview&from=2025-12-01&to=2025-12-24",
-    label: "github.com/AkshatDaiya",
-    Icon: GitHubIcon,
-  },
-];
+/* ---------------- Component ---------------- */
+
+const EMAIL = "daiyaakshat4@gmail.com";
 
 const SocialIcons: React.FC = () => {
-  return (
-    // hide on small screens (mobile) to avoid taking precious screen space
-    <div className="fixed left-4 top-4 z-50 flex flex-col gap-3">
-      {items.map(({ id, href, label, Icon }) => (
-        <div key={id} className="group">
-          <a
-            href={href}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={label}
-            className="relative flex items-center gap-3 rounded-full text-sm font-medium text-slate-900 dark:text-slate-100"
-          >
-            {/* Icon container */}
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-sm transition-transform duration-200 group-hover:scale-105">
-              <Icon />
-            </div>
+  const [copied, setCopied] = React.useState(false);
 
-            {/* Sliding label: starts translated left and invisible, slides in on hover */}
-            <span className="absolute left-12 -translate-x-6 opacity-0 transition-all duration-250 group-hover:translate-x-0 group-hover:opacity-100 whitespace-nowrap rounded-md bg-slate-50 px-3 py-2 text-xs shadow-md dark:bg-slate-800">
-              {label}
-            </span>
-          </a>
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      window.prompt("Copy email:", EMAIL);
+    }
+  };
+
+  const items: Item[] = [
+    {
+      id: "linkedin",
+      href: "https://www.linkedin.com/in/akshat-daiya-a0b67b355/",
+      label: "linkedin.com/in/akshat-daiya",
+      Icon: LinkedInIcon,
+    },
+    {
+      id: "github",
+      href: "https://github.com/AkshatDaiya",
+      label: "github.com/AkshatDaiya",
+      Icon: GitHubIcon,
+    },
+    {
+      id: "gmail",
+      label: copied ? "Copied!" : EMAIL,
+      Icon: GmailIcon,
+      onClick: copyEmail,
+    },
+  ];
+
+  return (
+    <div className="fixed left-4 top-4 z-50 flex flex-col gap-3">
+      {items.map(({ id, href, label, Icon, onClick }) => (
+        <div
+          key={id}
+          className="group"
+        >
+          {href ? (
+            <a
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={label}
+              className="relative flex items-center gap-3 rounded-full text-sm font-medium text-slate-900 dark:text-slate-100"
+            >
+              <IconButton
+                Icon={Icon}
+                label={label}
+              />
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={onClick}
+              aria-label="Copy email address"
+              className="relative flex items-center gap-3 rounded-full text-sm font-medium text-slate-900 dark:text-slate-100"
+            >
+              <IconButton
+                Icon={Icon}
+                label={label}
+              />
+            </button>
+          )}
         </div>
       ))}
     </div>
   );
 };
+
+/* ---------------- Shared UI ---------------- */
+
+const IconButton = ({ Icon, label }: { Icon: React.FC; label: string }) => (
+  <>
+    <div className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-sm transition-transform duration-200 group-hover:scale-105">
+      <Icon />
+    </div>
+
+    <span className="absolute left-12 -translate-x-6 opacity-0 transition-all duration-250 group-hover:translate-x-0 group-hover:opacity-100 whitespace-nowrap rounded-md bg-slate-50 px-3 py-2 text-xs shadow-md dark:bg-slate-800 cursor-pointer">
+      {label}
+    </span>
+  </>
+);
 
 export default SocialIcons;

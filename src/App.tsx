@@ -24,7 +24,7 @@ const App: React.FC = () => {
             return <NotFound />;
           }
         } catch (e) {
-          // ignore and fall through to normal render
+          // ignore and fall through to normal rendering
         }
         return null;
       })()}

@@ -77,8 +77,8 @@ const HeroAndAbout = () => {
             transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
             className="mt-3 sm:mt-4 text-base sm:text-xl md:text-2xl lg:text-3xl font-medium leading-snug text-muted-foreground"
           >
-            A frontend and MERN stack developer building fast, scalable, and
-            user-focused web applications.
+            A web developer building fast, scalable, and user-focused web
+            applications.
           </motion.h2>
 
           <motion.p

@@ -25,7 +25,7 @@ export const projects: Project[] = [
     title: "Developer Community Platform",
     role: "Frontend Developer",
     description:
-      "A scalable community-driven platform allowing developers and job seekers to create and manage communities in under 60 seconds.",
+      "Scalable community-driven platform built to support laid-off professionals, freshers, and job seekers in discovering new opportunities. The platform enables users to create and manage communities in under 60 seconds, share referrals, job links, and career resources, and collaborate within focused groups. Designed to foster peer support and opportunity sharing, it helps users stay connected, informed, and job-ready during career transitions.",
     tech: ["React", "TypeScript", "Firebase", "Tailwind CSS", "Redux Toolkit"],
     image: Community,
     images: [Community, CommunityGroups],
@@ -35,7 +35,7 @@ export const projects: Project[] = [
     title: "Long-Term Mentorship System",
     role: "Frontend Developer",
     description:
-      "Revenue-generating mentorship feature with free trial logic and one-on-one mentoring flows.",
+      "Revenue-generating mentorship system built for CrackCode to help learners move closer to their dream jobs through structured one-on-one mentorship. The platform supports free-trial onboarding, mentor discovery, and guided mentoring flows that enable personalized career guidance, skill development, and focused job preparation. Designed to balance strong user experience with business goals, the system improves mentor engagement while delivering real career impact for learners.",
     tech: ["React", "Firebase", "Framer Motion", "Tailwind CSS"],
     image: Mentorship,
     images: [Mentorship, MentorshipDetails],
@@ -45,7 +45,7 @@ export const projects: Project[] = [
     title: "CrakTrack – Task Management System",
     role: "Frontend Developer",
     description:
-      "Internal Trello-style task management system with task states, filters, sorting, and automated monthly rollover.",
+      "Internal Trello-inspired task management system built for CrakCode fellows to track work across clear workflow stages like To Do, In Progress, Blocked, and Resolved. Includes task deadlines with automatic overdue notifications, advanced filtering and sorting for prioritization, and an automated monthly rollover to seamlessly carry forward unfinished tasks.Designed with a focus on clean UI/UX, performance, and team visibility, improving accountability and on-time delivery.",
     tech: ["React", "TypeScript", "Tailwind CSS", "Firebase", "Framer Motion"],
     image: Craktrack,
     images: [Craktrack, CraktrackCreating, CraktrackCreating1],

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "../hooks/useToast";
 import Toast from "../components/Toast";
 
@@ -34,10 +35,35 @@ const GmailIcon = () => (
   </svg>
 );
 
+const ResumeIcon = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className="h-5 w-5"
+  >
+    <path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm8 1.5V8h4.5L14 3.5zM8 11h8v1.5H8V11zm0 3h8v1.5H8V14zm0 3h5v1.5H8V17z" />
+  </svg>
+);
+
+const HamburgerIcon = ({ open }: { open: boolean }) => (
+  <div className="flex flex-col gap-1.5">
+    <span
+      className={`h-0.5 w-5 bg-current transition ${open && "rotate-45 translate-y-2"}`}
+    />
+    <span
+      className={`h-0.5 w-5 bg-current transition ${open && "opacity-0"}`}
+    />
+    <span
+      className={`h-0.5 w-5 bg-current transition ${open && "-rotate-45 -translate-y-2"}`}
+    />
+  </div>
+);
+
 /* ---------------- Component ---------------- */
 
 const SocialIcons: React.FC = () => {
   const { visible, message, showToast } = useToast();
+  const [open, setOpen] = useState(false);
 
   const copyEmail = async () => {
     await navigator.clipboard.writeText("daiyaakshat4@gmail.com");
@@ -58,6 +84,12 @@ const SocialIcons: React.FC = () => {
       Icon: GitHubIcon,
     },
     {
+      id: "resume",
+      href: "/AkshatDaiya_FrontEndDev.pdf",
+      label: "Resume",
+      Icon: ResumeIcon,
+    },
+    {
       id: "gmail",
       label: "Email",
       Icon: GmailIcon,
@@ -67,44 +99,63 @@ const SocialIcons: React.FC = () => {
 
   return (
     <>
-      {/* SOCIAL ICONS */}
-      <div className="fixed left-4 top-4 z-50 flex flex-col gap-3">
-        {items.map(({ id, href, label, Icon, onClick }) => (
-          <div
-            key={id}
-            className="group relative"
-          >
-            {href ? (
-              <a
-                href={href}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={label}
-                className="flex items-center"
-              >
-                <IconButton
-                  Icon={Icon}
-                  label={label}
-                />
-              </a>
-            ) : (
-              <button
-                type="button"
-                onClick={onClick}
-                aria-label="Copy email address"
-                className="flex items-center cursor-pointer"
-              >
-                <IconButton
-                  Icon={Icon}
-                  label={label}
-                />
-              </button>
-            )}
-          </div>
-        ))}
-      </div>
+      {/* Hamburger */}
+      <button
+        onClick={() => setOpen(!open)}
+        className="fixed left-4 top-4 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-900 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 cursor-pointer"
+        aria-label="Toggle social links"
+      >
+        <HamburgerIcon open={open} />
+      </button>
 
-      {/* TOAST */}
+      {/* Animated Social Icons */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.25 }}
+            className="fixed left-4 top-20 z-40 flex flex-col gap-3"
+          >
+            {items.map(({ id, href, label, Icon, onClick }) => (
+              <div
+                key={id}
+                className="group relative"
+              >
+                {href ? (
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={label}
+                    className="flex items-center"
+                  >
+                    <IconButton
+                      Icon={Icon}
+                      label={label}
+                    />
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={onClick}
+                    aria-label="Copy email address"
+                    className="flex items-center cursor-pointer"
+                  >
+                    <IconButton
+                      Icon={Icon}
+                      label={label}
+                    />
+                  </button>
+                )}
+              </div>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Toast */}
       <Toast
         visible={visible}
         message={message}
@@ -117,12 +168,10 @@ const SocialIcons: React.FC = () => {
 
 const IconButton = ({ Icon, label }: { Icon: React.FC; label: string }) => (
   <>
-    {/* Tap target */}
     <div className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-900 shadow-sm transition-transform duration-200 hover:scale-105 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100">
       <Icon />
     </div>
 
-    {/* Desktop hover label */}
     <span
       className="
         pointer-events-none

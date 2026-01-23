@@ -42,14 +42,14 @@ export const projects: Project[] = [
     link: "https://www.crakcode.in/mentor-search",
   },
   {
-    title: "CrakTrack – Task Management System",
+    title: "TaskFlow – Task Management System",
     role: "Frontend Developer",
     description:
       "Internal Trello-inspired task management system built for CrakCode fellows to track work across clear workflow stages like To Do, In Progress, Blocked, and Resolved. Includes task deadlines with automatic overdue notifications, advanced filtering and sorting for prioritization, and an automated monthly rollover to seamlessly carry forward unfinished tasks.Designed with a focus on clean UI/UX, performance, and team visibility, improving accountability and on-time delivery.",
     tech: ["React", "TypeScript", "Tailwind CSS", "Firebase", "Framer Motion"],
     image: Craktrack,
     images: [Craktrack, CraktrackCreating, CraktrackCreating1],
-    link: "https://www.crakcode.in/craktrack",
+    link: "https://task-flow-six-delta.vercel.app/",
   },
 ];
 

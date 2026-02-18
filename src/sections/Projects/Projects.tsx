@@ -49,7 +49,7 @@ export const projects: Project[] = [
     tech: ["React", "TypeScript", "Tailwind CSS", "Firebase", "Framer Motion"],
     image: Craktrack,
     images: [Craktrack, CraktrackCreating, CraktrackCreating1],
-    link: "https://task-flow-six-delta.vercel.app/",
+    link: "https://taskflow.cyou/",
   },
 ];
 

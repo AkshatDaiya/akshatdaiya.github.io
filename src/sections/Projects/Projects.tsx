@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useRef, useState } from "react";
 import Community from "../../assets/images/community.webp";
 import CommunityGroups from "../../assets/images/community_groups_reactjs.webp";
 import Mentorship from "../../assets/images/mentorship_program.webp";
@@ -45,13 +45,15 @@ export const projects: Project[] = [
     title: "TaskFlow – Task Management System",
     role: "Frontend Developer",
     description:
-      "Internal Trello-inspired task management system built for CrakCode fellows to track work across clear workflow stages like To Do, In Progress, Blocked, and Resolved. Includes task deadlines with automatic overdue notifications, advanced filtering and sorting for prioritization, and an automated monthly rollover to seamlessly carry forward unfinished tasks.Designed with a focus on clean UI/UX, performance, and team visibility, improving accountability and on-time delivery.",
+      "Internal Trello-inspired task management system built for CrakCode fellows to track work across clear workflow stages like To Do, In Progress, Blocked, and Resolved. Includes task deadlines with automatic overdue notifications, advanced filtering and sorting for prioritization, and an automated monthly rollover to seamlessly carry forward unfinished tasks. Designed with a focus on clean UI/UX, performance, and team visibility, improving accountability and on-time delivery.",
     tech: ["React", "TypeScript", "Tailwind CSS", "Firebase", "Framer Motion"],
     image: Craktrack,
     images: [Craktrack, CraktrackCreating, CraktrackCreating1],
     link: "https://taskflow.cyou/",
   },
 ];
+
+const MAX_TAGS = 3;
 
 export default function Projects() {
   const [open, setOpen] = useState(false);
@@ -60,72 +62,84 @@ export default function Projects() {
   const [slideIndex, setSlideIndex] = useState(0);
   const modalRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        fullImageOpen ? setFullImageOpen(false) : setOpen(false);
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [fullImageOpen]);
-
   const openModal = (index: number) => {
     setActive(index);
     setOpen(true);
-    setSlideIndex(0);
-    setFullImageOpen(false);
   };
 
   return (
-    <section className="py-16 px-4">
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-10">
-          <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
-            Projects
-          </p>
-          <h2 className="mt-2 text-3xl font-semibold">Selected work</h2>
-        </div>
+    <section
+      id="projects"
+      className="px-4 py-16"
+    >
+      <div className="mx-auto max-w-6xl">
+        <h2
+          className="text-3xl font-semibold"
+          style={{ fontFamily: "Space Grotesk" }}
+        >
+          Selected work
+        </h2>
+        <p
+          className="mt-2 max-w-xl text-slate-500 dark:text-slate-400"
+          style={{ fontFamily: "Space Grotesk" }}
+        >
+          Products I've built and shipped as a frontend developer.
+        </p>
 
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((p, idx) => (
-            <article
-              key={p.title}
-              role="button"
-              tabIndex={0}
-              onClick={() => openModal(idx)}
-              onKeyDown={(e) => e.key === "Enter" && openModal(idx)}
-              className="group cursor-pointer rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-950/5 dark:bg-slate-900/70 transition hover:-translate-y-1 hover:shadow-xl"
-            >
-              <div className="aspect-4/3 relative">
-                <img
-                  src={p.image}
-                  alt={p.title}
-                  className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-
-                {/* hover overlay */}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition" />
-
-                {/* bottom content */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 text-white bg-linear-to-t from-black/80 to-transparent">
-                  <h3 className="font-semibold">{p.title}</h3>
-
-                  <div className="overflow-hidden">
-                    <div className="transform-gpu translate-y-3 opacity-0 max-h-0 overflow-hidden group-hover:translate-y-0 group-hover:opacity-100 group-hover:max-h-40 transition-all duration-300">
-                      <p className="text-xs text-slate-300 mt-1">{p.role}</p>
-                      <p className="mt-1 text-xs text-slate-100">
-                        {p.description.length > 120
-                          ? p.description.slice(0, 120) + "..."
-                          : p.description}
-                      </p>
-                    </div>
-                  </div>
+            <li key={p.title}>
+              <article className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-slate-950/5 transition hover:border-slate-300 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900/70 dark:hover:border-slate-700">
+                <div className="aspect-16/10 overflow-hidden bg-slate-900">
+                  <img
+                    src={p.image}
+                    alt=""
+                    loading="lazy"
+                    className="h-full w-full cursor-pointer object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
-              </div>
-            </article>
+
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="font-semibold leading-snug">
+                    {/* Stretched button makes the whole card clickable and keyboard accessible */}
+                    <button
+                      type="button"
+                      onClick={() => openModal(idx)}
+                      aria-haspopup="dialog"
+                      className="text-left after:absolute after:inset-0 after:rounded-xl focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-slate-400"
+                    >
+                      {p.title}
+                    </button>
+                  </h3>
+
+                  <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                    {p.role}
+                  </p>
+
+                  <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+                    {p.description}
+                  </p>
+
+                  <ul className="mt-auto flex flex-wrap gap-2 pt-4">
+                    {p.tech.slice(0, MAX_TAGS).map((t) => (
+                      <li
+                        key={t}
+                        className="rounded-full bg-slate-950/5 px-2.5 py-1 text-xs text-slate-600 dark:bg-white/10 dark:text-slate-200"
+                      >
+                        {t}
+                      </li>
+                    ))}
+                    {p.tech.length > MAX_TAGS && (
+                      <li className="px-1 py-1 text-xs text-slate-500 dark:text-slate-400">
+                        +{p.tech.length - MAX_TAGS}
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              </article>
+            </li>
           ))}
-        </div>
+        </ul>
 
         <DetailsModal
           open={open}

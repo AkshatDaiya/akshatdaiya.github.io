@@ -57,10 +57,16 @@ export default function Experience() {
           <p className="text-xs sm:text-sm font-medium tracking-[0.2em] uppercase text-slate-400">
             Experience
           </p>
-          <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight">
+          <h2
+            className="mt-2 text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight"
+            style={{ fontFamily: "Space Grotesk" }}
+          >
             What I&apos;ve been working on
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-muted-foreground/80 max-w-2xl">
+          <p
+            className="mt-3 text-sm sm:text-base text-muted-foreground/80 max-w-2xl"
+            style={{ fontFamily: "Space Grotesk" }}
+          >
             From internships to personal projects, here’s a quick overview of
             the roles and work that have shaped how I design and build
             interfaces.
@@ -68,7 +74,10 @@ export default function Experience() {
         </div>
 
         {/* Clean stacked resume cards */}
-        <div className="space-y-4 sm:space-y-5">
+        <div
+          className="space-y-4 sm:space-y-5"
+          style={{ fontFamily: "DM Sans" }}
+        >
           {experiences.map((item) => (
             <article
               key={item.role + item.company}

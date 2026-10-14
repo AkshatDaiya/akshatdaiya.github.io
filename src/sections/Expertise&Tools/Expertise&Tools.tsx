@@ -1,72 +1,181 @@
-const expertise = [
-  "Architecting scalable React applications for real-world, high-traffic use cases",
-  "Designing mobile-first, accessible interfaces with strong UX fundamentals",
-  "Building community-driven platforms focused on performance and reliability",
-  "Developing revenue-impacting features such as long-term mentorship systems",
-  "Continuously optimising frontend performance and user experience",
+import type { IconType } from "react-icons";
+import {
+  HiOutlineBolt,
+  HiOutlineCurrencyDollar,
+  HiOutlineDevicePhoneMobile,
+  HiOutlineRocketLaunch,
+  HiOutlineUserGroup,
+} from "react-icons/hi2";
+import {
+  SiBootstrap,
+  SiExpress,
+  SiFirebase,
+  SiFramer,
+  SiGit,
+  SiGithub,
+  SiGooglechrome,
+  SiJavascript,
+  SiMongodb,
+  SiNetlify,
+  SiNodedotjs,
+  SiPostman,
+  SiReact,
+  SiReactrouter,
+  SiRedux,
+  SiTailwindcss,
+  SiTypescript,
+  SiVercel,
+} from "react-icons/si";
+
+const expertise: { icon: IconType; text: string }[] = [
+  {
+    icon: HiOutlineRocketLaunch,
+    text: "Architecting scalable React applications for real-world, high-traffic use cases",
+  },
+  {
+    icon: HiOutlineDevicePhoneMobile,
+    text: "Designing mobile-first, accessible interfaces with strong UX fundamentals",
+  },
+  {
+    icon: HiOutlineUserGroup,
+    text: "Building community-driven platforms focused on performance and reliability",
+  },
+  {
+    icon: HiOutlineCurrencyDollar,
+    text: "Developing revenue-impacting features such as long-term mentorship systems",
+  },
+  {
+    icon: HiOutlineBolt,
+    text: "Continuously optimising frontend performance and user experience",
+  },
 ];
 
-const tools = [
-  "React.js, JavaScript (ES6+), TypeScript",
-  "Redux Toolkit, Context API, React Router",
-  "Tailwind CSS, Bootstrap, Framer Motion",
-  "MERN (MongoDB, Express, React, Node.js)",
-  "Firebase (Auth, Firestore, Cloud Functions, Storage)",
-  "Git, GitHub, Vercel, Netlify, Postman, Chrome DevTools",
+const tools: {
+  label: string;
+  items: { name: string; icon: IconType }[];
+}[] = [
+  {
+    label: "Frontend",
+    items: [
+      { name: "React.js", icon: SiReact },
+      { name: "JavaScript (ES6+)", icon: SiJavascript },
+      { name: "TypeScript", icon: SiTypescript },
+    ],
+  },
+  {
+    label: "State & routing",
+    items: [
+      { name: "Redux Toolkit", icon: SiRedux },
+      { name: "Context API", icon: SiReact },
+      { name: "React Router", icon: SiReactrouter },
+    ],
+  },
+  {
+    label: "Styling & motion",
+    items: [
+      { name: "Tailwind CSS", icon: SiTailwindcss },
+      { name: "Bootstrap", icon: SiBootstrap },
+      { name: "Framer Motion", icon: SiFramer },
+    ],
+  },
+  {
+    label: "Backend & data",
+    items: [
+      { name: "Node.js", icon: SiNodedotjs },
+      { name: "Express", icon: SiExpress },
+      { name: "MongoDB", icon: SiMongodb },
+      { name: "Firebase", icon: SiFirebase },
+    ],
+  },
+  {
+    label: "Workflow",
+    items: [
+      { name: "Git", icon: SiGit },
+      { name: "GitHub", icon: SiGithub },
+      { name: "Vercel", icon: SiVercel },
+      { name: "Netlify", icon: SiNetlify },
+      { name: "Postman", icon: SiPostman },
+      { name: "Chrome DevTools", icon: SiGooglechrome },
+    ],
+  },
 ];
 
 export default function ExpertiseAndTools() {
   return (
-    <section className="relative py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-linear-to-b from-white via-slate-50/60 to-slate-100/40 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
-      <div className="max-w-6xl mx-auto">
+    <section
+      id="expertise"
+      className="px-4 py-16 sm:px-6 sm:py-20 lg:px-8"
+    >
+      <div className="mx-auto max-w-6xl">
         {/* Header */}
-        <div className="mb-12 sm:mb-16 max-w-3xl">
-          <p className="text-xs sm:text-sm font-medium tracking-[0.25em] uppercase text-slate-400">
-            Expertise & Tools
-          </p>
-
-          <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-slate-900 dark:text-slate-50">
-            How I build & what I use
+        <div className="mx-auto max-w-2xl text-center">
+          <h2
+            className="text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-50"
+            style={{ fontFamily: "Space Grotesk" }}
+          >
+            Expertise and tools
           </h2>
-
-          <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-600 dark:text-slate-300">
-            A focused overview of my frontend expertise and the tools I rely on
-            to build fast, scalable, and user-first web applications.
+          <p
+            className="mt-3 text-slate-500 dark:text-slate-400"
+            style={{ fontFamily: "Space Grotesk" }}
+          >
+            What I focus on, and the stack I use to build fast, scalable web
+            applications.
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid gap-6 sm:gap-8 lg:grid-cols-2">
-          {/* Expertise */}
-          <div className="group relative rounded-2xl border border-slate-200/70 bg-white/80 p-7 sm:p-8 shadow-sm backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-slate-800/70 dark:bg-slate-900/80">
-            <h3 className="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-slate-50">
-              Expertise
-            </h3>
+        {/* Expertise */}
+        <ul className="mt-12 grid gap-4 sm:grid-cols-2">
+          {expertise.map(({ icon: Icon, text }, i) => (
+            <li
+              key={text}
+              className={`flex items-start gap-4 rounded-xl border border-slate-200 bg-slate-950/5 p-5 dark:border-slate-800 dark:bg-slate-900/70 ${
+                i === expertise.length - 1 && expertise.length % 2 === 1
+                  ? "sm:col-span-2"
+                  : ""
+              }`}
+            >
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-950/10 text-slate-700 dark:bg-white/10 dark:text-slate-200">
+                <Icon
+                  className="h-5 w-5"
+                  aria-hidden="true"
+                />
+              </span>
+              <p className="pt-1.5 text-sm leading-relaxed text-slate-700 sm:text-base dark:text-slate-200">
+                {text}
+              </p>
+            </li>
+          ))}
+        </ul>
 
-            <ul className="mt-6 space-y-4 text-sm sm:text-base text-slate-700 dark:text-slate-200">
-              {expertise.map((item) => (
-                <li key={item} className="grid grid-cols-[18px_1fr] items-center gap-3">
-                  <span className="h-2 w-2 rounded-full bg-slate-400 dark:bg-slate-500 self-center" />
-                  <span className="leading-relaxed">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* Tools */}
+        <div className="mt-14 border-t border-slate-200 pt-10 dark:border-slate-800">
+          <h3 className="text-center text-lg font-semibold text-slate-900 dark:text-slate-50">
+            Tools
+          </h3>
 
-          {/* Tools */}
-          <div className="group relative rounded-2xl border border-slate-200/70 bg-white/80 p-7 sm:p-8 shadow-sm backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-slate-800/70 dark:bg-slate-900/80">
-            <h3 className="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-slate-50">
-              Tools & software
-            </h3>
-
-            <ul className="mt-6 space-y-4 text-sm sm:text-base text-slate-700 dark:text-slate-200">
-              {tools.map((item) => (
-                <li key={item} className="grid grid-cols-[18px_1fr] items-center gap-3">
-                  <span className="h-2 w-2 rounded-full bg-slate-400 dark:bg-slate-500 self-center" />
-                  <span className="leading-relaxed">{item}</span>
-                </li>
-              ))}
-            </ul>
+          <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-3 lg:grid-cols-5">
+            {tools.map((group) => (
+              <div key={group.label}>
+                <h4 className="text-sm font-medium text-slate-900 dark:text-slate-50">
+                  {group.label}
+                </h4>
+                <ul className="mt-3 space-y-2.5">
+                  {group.items.map(({ name, icon: Icon }) => (
+                    <li
+                      key={name}
+                      className="flex items-center gap-2.5 text-sm text-slate-500 dark:text-slate-400"
+                    >
+                      <Icon
+                        className="h-4 w-4 shrink-0 text-slate-700 dark:text-slate-300"
+                        aria-hidden="true"
+                      />
+                      {name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -1,9 +1,13 @@
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useCallback, useEffect } from "react";
+import {
+  HiArrowUpRight,
+  HiChevronLeft,
+  HiChevronRight,
+  HiXMark,
+} from "react-icons/hi2";
 import type { Project } from "./Projects";
-import { HiArrowUpRight } from "react-icons/hi2";
 
-/* ---------------- Props ---------------- */
 interface DetailsModalProps {
   open: boolean;
   setOpen: (v: boolean) => void;
@@ -17,7 +21,33 @@ interface DetailsModalProps {
   setSlideIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const LG_BREAKPOINT = 1024;
+/* Small reusable arrow button */
+function ArrowButton({
+  direction,
+  onClick,
+  className = "",
+}: {
+  direction: "prev" | "next";
+  onClick: () => void;
+  className?: string;
+}) {
+  const Icon = direction === "prev" ? HiChevronLeft : HiChevronRight;
+  return (
+    <button
+      type="button"
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+      aria-label={direction === "prev" ? "Previous image" : "Next image"}
+      className={`absolute top-1/2 -translate-y-1/2 rounded-full bg-black/40 p-2 text-white transition hover:bg-black/60 focus-visible:outline-2 focus-visible:outline-white ${
+        direction === "prev" ? "left-3" : "right-3"
+      } ${className}`}
+    >
+      <Icon className="h-5 w-5" />
+    </button>
+  );
+}
 
 export default function DetailsModal({
   open,
@@ -31,203 +61,223 @@ export default function DetailsModal({
   slideIndex,
   setSlideIndex,
 }: DetailsModalProps) {
-  const prefersReducedMotion = useReducedMotion();
-  const [isDesktop, setIsDesktop] = useState(false);
+  const reduceMotion = useReducedMotion();
 
-  /* ---------------- Desktop check ---------------- */
-  useEffect(() => {
-    const check = () => setIsDesktop(window.innerWidth >= LG_BREAKPOINT);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
-  /* ---------------- Scroll lock (modal + fullscreen) ---------------- */
-  useEffect(() => {
-    if (!open && !fullImageOpen) return;
-
-    const scrollY = window.scrollY;
-
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.left = "0";
-    document.body.style.right = "0";
-    document.body.style.width = "100%";
-
-    return () => {
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
-      document.body.style.width = "";
-      window.scrollTo(0, scrollY);
-    };
-  }, [open, fullImageOpen]);
-
-  if (!open || active === null) return null;
-
-  const enableMotion = isDesktop && !prefersReducedMotion;
-
-  const images = projects[active].images ?? [projects[active].image];
+  const project = active !== null ? projects[active] : null;
+  const images = project ? (project.images ?? [project.image]) : [];
   const hasMultiple = images.length > 1;
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setOpen(false);
     setActive(null);
     setFullImageOpen(false);
-  };
+  }, [setOpen, setActive, setFullImageOpen]);
 
-  const prevImage = () =>
-    setSlideIndex((s) => (s - 1 + images.length) % images.length);
+  const prevImage = useCallback(
+    () => setSlideIndex((s) => (s - 1 + images.length) % images.length),
+    [setSlideIndex, images.length],
+  );
 
-  const nextImage = () => setSlideIndex((s) => (s + 1) % images.length);
+  const nextImage = useCallback(
+    () => setSlideIndex((s) => (s + 1) % images.length),
+    [setSlideIndex, images.length],
+  );
+
+  /* Start at the first image whenever a different project opens */
+  useEffect(() => {
+    setSlideIndex(0);
+  }, [active, setSlideIndex]);
+
+  /* Lock page scroll while the modal is open */
+  useEffect(() => {
+    if (!open) return;
+    const scrollY = window.scrollY;
+    Object.assign(document.body.style, {
+      position: "fixed",
+      top: `-${scrollY}px`,
+      left: "0",
+      right: "0",
+      width: "100%",
+    });
+    return () => {
+      Object.assign(document.body.style, {
+        position: "",
+        top: "",
+        left: "",
+        right: "",
+        width: "",
+      });
+      window.scrollTo(0, scrollY);
+    };
+  }, [open]);
+
+  /* Keyboard: Esc closes (fullscreen first), arrows change image */
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        fullImageOpen ? setFullImageOpen(false) : closeModal();
+      } else if (hasMultiple && e.key === "ArrowLeft") {
+        prevImage();
+      } else if (hasMultiple && e.key === "ArrowRight") {
+        nextImage();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [
+    open,
+    fullImageOpen,
+    hasMultiple,
+    closeModal,
+    setFullImageOpen,
+    prevImage,
+    nextImage,
+  ]);
+
+  const scale = reduceMotion ? 1 : 0.96;
 
   return (
     <AnimatePresence>
-      {/* ---------------- MAIN MODAL ---------------- */}
-      <motion.div
-        key="project-modal"
-        className="fixed inset-0 z-50 bg-black/75 flex items-center justify-center px-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        onClick={closeModal}
-      >
+      {open && project && (
         <motion.div
-          ref={modalRef}
-          onClick={(e) => e.stopPropagation()}
-          initial={enableMotion ? { scale: 0.95 } : undefined}
-          animate={enableMotion ? { scale: 1 } : undefined}
-          exit={enableMotion ? { scale: 0.95 } : undefined}
-          className="relative bg-slate-950 text-white max-w-3xl w-full max-h-[90vh] rounded-xl overflow-hidden flex flex-col"
+          key="project-modal"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 px-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          onClick={closeModal}
         >
-          {/* Header */}
-          <div className="p-4 border-b border-white/10 flex items-start justify-between gap-4">
-            <h3 className="text-lg font-semibold leading-snug">
-              {projects[active].title}
-            </h3>
-            <button
-              onClick={closeModal}
-              aria-label="Close modal"
-              className="shrink-0 rounded-full p-2 text-slate-300 hover:text-white hover:bg-white/10"
-            >
-              ✕
-            </button>
-          </div>
-
-          {/* Image with arrows */}
-          <div className="relative h-64 w-full bg-black">
-            {hasMultiple && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  prevImage();
-                }}
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-black/40 hover:bg-black/60"
-                aria-label="Previous image"
+          <motion.div
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-modal-title"
+            onClick={(e) => e.stopPropagation()}
+            initial={{ scale }}
+            animate={{ scale: 1 }}
+            exit={{ scale }}
+            transition={{ duration: 0.2 }}
+            className="flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-xl bg-slate-950 text-white"
+          >
+            {/* Header */}
+            <header className="flex items-start justify-between gap-4 border-b border-white/10 p-4">
+              <h3
+                id="project-modal-title"
+                className="text-lg font-semibold leading-snug"
               >
-                ‹
-              </button>
-            )}
-
-            <img
-              src={images[slideIndex]}
-              alt={projects[active].title}
-              className="h-full w-full object-cover cursor-zoom-in"
-              onClick={() => setFullImageOpen(true)}
-            />
-
-            {hasMultiple && (
+                {project.title}
+              </h3>
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  nextImage();
-                }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-black/40 hover:bg-black/60"
-                aria-label="Next image"
+                type="button"
+                onClick={closeModal}
+                aria-label="Close"
+                className="shrink-0 rounded-full p-2 text-slate-300 transition hover:bg-white/10 hover:text-white"
               >
-                ›
+                <HiXMark className="h-5 w-5" />
               </button>
-            )}
-          </div>
+            </header>
 
-          {/* Content */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-4">
-            <p className="text-sm leading-relaxed">
-              {projects[active].description}
-            </p>
-
-            <div className="flex flex-wrap gap-2">
-              {projects[active].tech.map((t, i) => (
-                <span
-                  key={`${t}-${i}`}
-                  className="px-3 py-1 text-xs bg-white/10 rounded-full"
-                >
-                  {t}
-                </span>
-              ))}
+            {/* Gallery */}
+            <div className="relative h-64 w-full bg-black">
+              <img
+                src={images[slideIndex]}
+                alt={`${project.title} screenshot ${slideIndex + 1}`}
+                className="h-full w-full cursor-zoom-in object-cover"
+                onClick={() => setFullImageOpen(true)}
+              />
+              {hasMultiple && (
+                <>
+                  <ArrowButton
+                    direction="prev"
+                    onClick={prevImage}
+                  />
+                  <ArrowButton
+                    direction="next"
+                    onClick={nextImage}
+                  />
+                  <span className="absolute bottom-3 right-3 rounded-full bg-black/50 px-2.5 py-1 text-xs text-slate-200">
+                    {slideIndex + 1} / {images.length}
+                  </span>
+                </>
+              )}
             </div>
 
-            {projects[active].link && (
-              <div className="pt-4">
+            {/* Content */}
+            <div className="flex-1 space-y-4 overflow-y-auto p-6">
+              <p className="text-sm leading-relaxed text-slate-300">
+                {project.description}
+              </p>
+
+              <ul className="flex flex-wrap gap-2">
+                {project.tech.map((t) => (
+                  <li
+                    key={t}
+                    className="rounded-full bg-white/10 px-3 py-1 text-xs text-slate-200"
+                  >
+                    {t}
+                  </li>
+                ))}
+              </ul>
+
+              {project.link && (
                 <a
-                  href={projects[active].link}
+                  href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`Open ${projects[active].title}`}
-                  className="inline-flex items-center gap-2 rounded-md border border-white/15 px-4 py-2 text-sm font-medium text-slate-200 hover:bg-white/5 hover:border-white/25 transition"
+                  className="inline-flex items-center gap-2 rounded-md border border-white/15 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-white/25 hover:bg-white/5"
                 >
                   View live project
                   <HiArrowUpRight className="text-base opacity-80" />
                 </a>
-              </div>
-            )}
-          </div>
-        </motion.div>
-      </motion.div>
+              )}
+            </div>
+          </motion.div>
 
-      {/* ---------------- FULLSCREEN IMAGE ---------------- */}
-      {fullImageOpen && (
-        <motion.div
-          key="fullscreen-image"
-          className="fixed inset-0 z-60 bg-black flex items-center justify-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => setFullImageOpen(false)}
-        >
-          {hasMultiple && (
-            <button
+          {/* Fullscreen image */}
+          {fullImageOpen && (
+            <motion.div
+              key="fullscreen-image"
+              className="fixed inset-0 z-60 flex items-center justify-center bg-black"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={(e) => {
                 e.stopPropagation();
-                prevImage();
+                setFullImageOpen(false);
               }}
-              className="absolute left-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20"
-              aria-label="Previous image"
             >
-              ‹
-            </button>
-          )}
-
-          <img
-            src={images[slideIndex]}
-            alt={projects[active].title}
-            className="max-h-[90vh] max-w-[90vw] object-contain"
-            onClick={(e) => e.stopPropagation()}
-            draggable={false}
-          />
-
-          {hasMultiple && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                nextImage();
-              }}
-              className="absolute right-4 z-50 p-3 rounded-full bg-white/10 hover:bg-white/20"
-              aria-label="Next image"
-            >
-              ›
-            </button>
+              <img
+                src={images[slideIndex]}
+                alt={`${project.title} screenshot ${slideIndex + 1}`}
+                className="max-h-[90vh] max-w-[90vw] object-contain"
+                onClick={(e) => e.stopPropagation()}
+                draggable={false}
+              />
+              {hasMultiple && (
+                <>
+                  <ArrowButton
+                    direction="prev"
+                    onClick={prevImage}
+                    className="left-4 bg-white/10 p-3 hover:bg-white/20"
+                  />
+                  <ArrowButton
+                    direction="next"
+                    onClick={nextImage}
+                    className="right-4 bg-white/10 p-3 hover:bg-white/20"
+                  />
+                </>
+              )}
+              <button
+                type="button"
+                onClick={() => setFullImageOpen(false)}
+                aria-label="Close fullscreen image"
+                className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
+              >
+                <HiXMark className="h-5 w-5" />
+              </button>
+            </motion.div>
           )}
         </motion.div>
       )}

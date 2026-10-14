@@ -45,8 +45,8 @@ export default function BackgroundEffects() {
           opacity: [0.78, 0.92, 0.78],
           y: [0, 12, 0],
         }}
-        transition={{ repeat: Infinity, duration: 14, ease: "easeInOut" }}
-        aria-hidden
+        // transition={{ repeat: Infinity, duration: 14, ease: "easeInOut" }}
+        // aria-hidden
       />
 
       <motion.div
@@ -56,8 +56,8 @@ export default function BackgroundEffects() {
           opacity: [0.7, 0.88, 0.7],
           y: [10, -6, 10],
         }}
-        transition={{ repeat: Infinity, duration: 16, ease: "easeInOut" }}
-        aria-hidden
+        // transition={{ repeat: Infinity, duration: 16, ease: "easeInOut" }}
+        // aria-hidden
       />
 
       <motion.div
@@ -67,8 +67,8 @@ export default function BackgroundEffects() {
           opacity: [0.62, 0.82, 0.62],
           y: [-8, 6, -8],
         }}
-        transition={{ repeat: Infinity, duration: 15, ease: "easeInOut" }}
-        aria-hidden
+        // transition={{ repeat: Infinity, duration: 15, ease: "easeInOut" }}
+        // aria-hidden
       />
     </>
   );

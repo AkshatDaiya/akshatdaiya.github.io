@@ -66,6 +66,7 @@ const HeroAndAbout = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.45, ease: "easeOut" }}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+            style={{ fontFamily: "Space Grotesk" }}
           >
             Hi, I&apos;m Akshat.
           </motion.h1>
@@ -75,7 +76,8 @@ const HeroAndAbout = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-            className="mt-3 sm:mt-4 text-base sm:text-xl md:text-2xl lg:text-3xl font-medium leading-snug text-muted-foreground"
+            className="mt-2 sm:mt-3 text-base sm:text-lg md:text-xl lg:text-2xl font-medium leading-snug text-muted-foreground"
+            style={{ fontFamily: "Space Grotesk" }}
           >
             A web developer building fast, scalable, and user-focused web
             applications.
@@ -87,6 +89,7 @@ const HeroAndAbout = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.18, ease: "easeOut" }}
             className="mt-4 sm:mt-6 max-w-xl mx-auto lg:mx-0 text-sm sm:text-base lg:text-lg leading-relaxed text-muted-foreground/80"
+            style={{fontFamily: "DM Sans"}}
           >
             From community-driven platforms to performance-optimised interfaces,
             I design and build intuitive, accessible products that scale for

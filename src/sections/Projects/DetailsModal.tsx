@@ -142,7 +142,7 @@ export default function DetailsModal({
       {open && project && (
         <motion.div
           key="project-modal"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 px-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 px-4 backdrop-blur-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -159,34 +159,27 @@ export default function DetailsModal({
             animate={{ scale: 1 }}
             exit={{ scale }}
             transition={{ duration: 0.2 }}
-            className="flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-xl bg-slate-950 text-white"
+            className="flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 text-slate-900 shadow-2xl shadow-slate-900/20 dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:shadow-black/50"
           >
-            {/* Header */}
-            <header className="flex items-start justify-between gap-4 border-b border-white/10 p-4">
-              <h3
-                id="project-modal-title"
-                className="text-lg font-semibold leading-snug"
-              >
-                {project.title}
-              </h3>
+            {/* Gallery: inset with its own radius, same as the card image */}
+            <div className="relative h-64 w-full shrink-0 overflow-hidden rounded-xl bg-slate-100 ring-1 ring-inset ring-slate-900/5 dark:bg-slate-800 dark:ring-white/10 sm:h-80">
+              <img
+                src={images[slideIndex]}
+                alt={`${project.title} screenshot ${slideIndex + 1}`}
+                className="h-full w-full cursor-zoom-in object-cover object-top"
+                onClick={() => setFullImageOpen(true)}
+              />
+
+              {/* Close button floats on the image */}
               <button
                 type="button"
                 onClick={closeModal}
                 aria-label="Close"
-                className="shrink-0 rounded-full p-2 text-slate-300 transition hover:bg-white/10 hover:text-white"
+                className="absolute right-3 top-3 rounded-full bg-slate-900/70 p-2 text-white backdrop-blur transition hover:bg-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
               >
                 <HiXMark className="h-5 w-5" />
               </button>
-            </header>
 
-            {/* Gallery */}
-            <div className="relative h-64 w-full bg-black">
-              <img
-                src={images[slideIndex]}
-                alt={`${project.title} screenshot ${slideIndex + 1}`}
-                className="h-full w-full cursor-zoom-in object-cover"
-                onClick={() => setFullImageOpen(true)}
-              />
               {hasMultiple && (
                 <>
                   <ArrowButton
@@ -197,7 +190,7 @@ export default function DetailsModal({
                     direction="next"
                     onClick={nextImage}
                   />
-                  <span className="absolute bottom-3 right-3 rounded-full bg-black/50 px-2.5 py-1 text-xs text-slate-200">
+                  <span className="absolute bottom-3 right-3 rounded-full bg-slate-900/70 px-2.5 py-1 text-xs font-medium text-white backdrop-blur">
                     {slideIndex + 1} / {images.length}
                   </span>
                 </>
@@ -205,33 +198,54 @@ export default function DetailsModal({
             </div>
 
             {/* Content */}
-            <div className="flex-1 space-y-4 overflow-y-auto p-6">
-              <p className="text-sm leading-relaxed text-slate-300">
+            <div className="flex-1 overflow-y-auto px-4 pb-4 pt-5 sm:px-5">
+              {project.role && (
+                <p className="text-xs font-medium text-indigo-600 dark:text-indigo-400">
+                  {project.role}
+                </p>
+              )}
+
+              <h3
+                id="project-modal-title"
+                className="mt-1.5 text-xl font-semibold leading-snug tracking-tight"
+              >
+                {project.title}
+              </h3>
+
+              <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                 {project.description}
               </p>
 
-              <ul className="flex flex-wrap gap-2">
-                {project.tech.map((t) => (
-                  <li
-                    key={t}
-                    className="rounded-full bg-white/10 px-3 py-1 text-xs text-slate-200"
-                  >
-                    {t}
-                  </li>
-                ))}
-              </ul>
+              {/* Footer: stack on the left, action on the right */}
+              <div className="mt-6 flex flex-wrap items-end justify-between gap-4 border-t border-slate-100 pt-4 dark:border-slate-800">
+                <ul className="flex flex-wrap gap-1.5">
+                  {project.tech.map((t) => (
+                    <li
+                      key={t}
+                      className="rounded-md border border-slate-200 px-2 py-0.5 text-xs font-medium text-slate-600 dark:border-slate-700 dark:text-slate-300"
+                    >
+                      {t}
+                    </li>
+                  ))}
+                </ul>
 
-              {project.link && (
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-md border border-white/15 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-white/25 hover:bg-white/5"
-                >
-                  View live project
-                  <HiArrowUpRight className="text-base opacity-80" />
-                </a>
-              )}
+                {project.link && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group/link inline-flex items-center gap-2 rounded-full bg-slate-900 py-1.5 pl-4 pr-2 text-sm font-medium text-white transition hover:bg-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 dark:focus-visible:ring-offset-slate-900"
+                  >
+                    View live project
+                    <span
+                      aria-hidden="true"
+                      className="flex size-6 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 dark:bg-slate-900/10"
+                    >
+                      <HiArrowUpRight className="text-sm" />
+                    </span>
+                  </a>
+                )}
+              </div>
             </div>
           </motion.div>
 
@@ -239,7 +253,7 @@ export default function DetailsModal({
           {fullImageOpen && (
             <motion.div
               key="fullscreen-image"
-              className="fixed inset-0 z-60 flex items-center justify-center bg-black"
+              className="fixed inset-0 z-60 flex items-center justify-center bg-slate-950"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -251,7 +265,7 @@ export default function DetailsModal({
               <img
                 src={images[slideIndex]}
                 alt={`${project.title} screenshot ${slideIndex + 1}`}
-                className="max-h-[90vh] max-w-[90vw] object-contain"
+                className="max-h-[90vh] max-w-[90vw] rounded-lg object-contain ring-1 ring-white/10"
                 onClick={(e) => e.stopPropagation()}
                 draggable={false}
               />
@@ -273,7 +287,7 @@ export default function DetailsModal({
                 type="button"
                 onClick={() => setFullImageOpen(false)}
                 aria-label="Close fullscreen image"
-                className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20"
+                className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
               >
                 <HiXMark className="h-5 w-5" />
               </button>
